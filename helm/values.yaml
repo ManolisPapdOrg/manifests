@@ -1,0 +1,20 @@
+repositories:
+  url: https://github.com/ManolisPapdOrg/manifests.git
+
+environment: dev
+
+applications:
+  - id: learningPlatformFrontend
+    name: learning-platform-frontend
+    enabled: true
+    ingress: true
+    image: valkongr/myfrontend:latest
+    replicas: 1
+    revisionHistory: 0
+    route:
+      probe: "/#/"
+      prefix: "/"
+      port: 80
+    mount: ""
+    volume: ""
+    observability: false

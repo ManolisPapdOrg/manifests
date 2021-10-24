@@ -1,0 +1,38 @@
+{{- range $application := .Values.applications }}
+{{- if $application.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ $application.name }}
+    labels:
+        app: {{ $application.name }}
+        group: {{ $.Chart.Name }}
+        version: 2.0.0
+spec:
+    replicas: {{ $application.replicas }}
+    revisionHistoryLimit : {{ $application.revisionHistory }}
+    selector:
+        matchLabels:
+            app: {{ $application.name }}
+            group: {{ $.Chart.Name }}
+            version: 2.0.0
+    template:
+        metadata:
+            labels:
+                app: {{ $application.name }}
+                group: {{ $.Chart.Name }}
+                version: 2.0.0
+        spec:
+            # subdomain: {{ $.Chart.Name }}
+            containers:
+                - name: {{ $application.name }}
+                  image: {{ $application.image }}
+                  imagePullPolicy: Always
+                  env:
+                  - name: "PORT"
+                    value: "80"
+                #   ports:
+                #     - containerPort: {{ $application.route.port }}
+{{- end }}
+{{- end }}
