@@ -1,0 +1,23 @@
+applications:
+  - id: learningPlatformFrontend
+    name: learning-platform-frontend
+    enabled: true
+    image: valkongr/my-game-app:latest
+    replicas: 2
+    route: 
+      prefix: "/"
+      rewrite: "/"
+      port: 80
+    mount: ""
+    volume: ""
+  - id: learningPlatformErrorHandler
+    name: learning-platform-error-handler
+    enabled: true
+    image: manolispapd/service-app:latest
+    replicas: 2
+    route: 
+      prefix: "/error-handler"
+      rewrite: "/"
+      port: 80
+    mount: ""
+    volume: ""

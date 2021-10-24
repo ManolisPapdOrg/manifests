@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: learning-platform
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ManolisPapdOrg/manifests.git
+    targetRevision: HEAD
+    path: applications
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: learning-platform
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
+
+

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learning-platform
+spec:
+  selector:
+    matchLabels:
+      app: learning-platform
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: learning-platform
+    spec:
+      containers:
+      - name: learning-platform
+        image: manolispapd/service-app:latest
+        ports:
+        - containerPort: 8780

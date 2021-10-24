@@ -1,0 +1,34 @@
+{{- range $application := .Values.applications }}
+{{- if $application.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ $application.name }}
+    labels:
+        app: {{ $application.name }}
+        group: {{ $.Chart.Name }}
+        version: v1
+spec:
+    replicas: {{ $application.replicas }}
+    selector:
+        matchLabels:
+            app: {{ $application.name }}
+            group: {{ $.Chart.Name }}
+            version: v1
+    template:
+        metadata:
+            labels:
+                app: {{ $application.name }}
+                group: {{ $.Chart.Name }}
+                version: v1
+        spec:
+            subdomain: {{ $.Chart.Name }}
+            containers:
+                - name: {{ $application.name }}
+                  image: {{ $application.image }}
+                  ports:
+                  - name: http
+                    containerPort: {{ $application.route.port }}
+{{- end }}
+{{- end }}
